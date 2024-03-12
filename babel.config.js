@@ -1,18 +1,33 @@
-/** @type {import('ts-jest').JestConfigWithTsJest} */
-module.exports = {
-	presets: ['module:@react-native/babel-preset'],
-	plugins: [
-		[
-			'module-resolver',
-			{
-				root: ['./src'],
-				extensions: ['.js', '.json'],
-				alias: {
-					'@': './src',
-				},
-			},
-		],
-		'inline-dotenv',
-		'react-native-reanimated/plugin', // needs to be last
-	],
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: [
+      ['babel-preset-expo', { jsxImportSource: 'nativewind' }],
+      'nativewind/babel',
+    ],
+    plugins: [
+      [
+        'module-resolver',
+        {
+          root: ['./'],
+          alias: {
+            '@': './src',
+            '@env': './src/core/env.js',
+          },
+          extensions: [
+            '.ios.ts',
+            '.android.ts',
+            '.ts',
+            '.ios.tsx',
+            '.android.tsx',
+            '.tsx',
+            '.jsx',
+            '.js',
+            '.json',
+          ],
+        },
+      ],
+      'react-native-reanimated/plugin',
+    ],
+  };
 };
